@@ -2,7 +2,7 @@
 	<div>
 		<van-nav-bar title="商品详情" style="background-color: #f7f7f7;" left-arrow @click-left="onClickLeft" />
 		<div class="goods">
-			<van-swipe class="goods-swipe" indicator-color="white" :loop="loop">
+			<van-swipe class="goods-swipe" indicator-color="#1989fa" :loop="loop">
 				<van-swipe-item v-for="(thumb,index) in goods.goods_images" :key="index">
 					<img :src="thumb">
 				</van-swipe-item>
