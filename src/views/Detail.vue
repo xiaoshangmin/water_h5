@@ -25,9 +25,9 @@
 			</van-collapse>
 
 			<van-goods-action>
-				<van-goods-action-big-btn primary @click="showBase = true">
+				<van-goods-action-button type="primary" @click="showBase = true">
 					立即购买
-				</van-goods-action-big-btn>
+				</van-goods-action-button>
 			</van-goods-action>
 
 			<van-sku v-model="showBase" :show-add-cart-btn="show_cart" @buy-clicked="onBuyClicked" :sku="skuData.sku" :goods="goodsInfo">
