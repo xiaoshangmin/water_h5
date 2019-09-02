@@ -5,6 +5,8 @@ import router from './router'
 import axios from 'axios'
 import VueClipboard from 'vue-clipboard2'
 
+ 
+
 import 'vant/lib/index.css'
 
 if (process.env.NODE_ENV == 'production') {

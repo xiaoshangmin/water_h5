@@ -41,15 +41,13 @@
 		<!-- 支付方式 -->
 		<van-radio-group v-model="radio">
 			<van-cell-group>
-				<van-cell :icon="alipay_icon" clickable @click="radio = '2'">
-					<template slot="title">
-						<span>支付宝支付</span>
-						<van-tag type="danger">推荐</van-tag>
-					</template>
-					<van-radio name="2" />
+				<van-cell :icon="alipay_icon" clickable @click="radio = '2'" label-disabled>
+					<span>支付宝支付</span>
+					<van-tag type="danger">推荐</van-tag>
+					<van-radio name="2" slot="right-icon" />
 				</van-cell>
-				<van-cell title="微信支付" :icon="wxpay_icon" clickable @click="radio = '1'">
-					<van-radio name="1" />
+				<van-cell title="微信支付" :icon="wxpay_icon" clickable @click="radio = '1'" label-disabled>
+					<van-radio name="1" slot="right-icon" />
 				</van-cell>
 			</van-cell-group>
 		</van-radio-group>
@@ -73,7 +71,7 @@
 				chosenAddressId: 1,
 				addressList: false,
 				showAddressList: false,
-				addressInfo: '',
+				addressInfo: [],
 				showAddressDetail: false,
 				disabled: true,
 				submitBarLoading: false,
@@ -98,7 +96,7 @@
 				lastPrice: 0
 			}
 		},
-		mounted() {
+		created() {
 			this.getAddressList();
 			this.getDefaultAddress();
 			this.getProduct();
@@ -196,8 +194,13 @@
 						remark: _this.remark,
 						gid: _this.$route.query.goods_id,
 						coupon_id: _this.coupon_id
-					}).then(function(res) {
+					}).then(res=> {
 						var data = res.data
+						if (0 == data.code) {
+							this.$toast(data.msg)
+							this.submitBarLoading = false
+							return
+						}
 						let c = _AP.ali.pay(data.data)
 						location.href = "https://wowyou.cc/mp/pay.html?goto=" + c
 						return
@@ -212,14 +215,15 @@
 						remark: _this.remark,
 						gid: _this.$route.query.goods_id,
 						coupon_id: _this.coupon_id
-					}).then(function(res) {
+					}).then(res=> {
 						res = res.data
 						if (0 == res.code) {
-							_this.$toast(res.msg)
+							this.$toast(res.msg)
+							this.submitBarLoading = false
 							return
 						}
 
-						_this.wxpay(res.data.order_sn)
+						this.wxpay(res.data.order_sn)
 					})
 				}
 			},

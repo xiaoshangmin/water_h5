@@ -13,9 +13,10 @@
 					<div class="goods-title">{{ goods.name }}</div>
 					<div class="goods-price">¥{{ goods.market_price }}</div>
 				</van-cell>
-				<van-cell class="goods-express">
+				<!-- <van-cell class="goods-express">
 					<van-col span="10">运费：0</van-col>
-				</van-cell>
+				</van-cell> -->
+				<van-cell title="查看评论" is-link :to="{path:'/comment',query:{goodsId:goods_id}}"/>
 			</van-cell-group>
 
 			<van-collapse v-model="activeNames" accordion @change="change">
@@ -30,7 +31,7 @@
 				</van-goods-action-button>
 			</van-goods-action>
 
-			<van-sku v-model="showBase" :show-add-cart-btn="show_cart" @buy-clicked="onBuyClicked" :sku="skuData.sku" :goods="goodsInfo">
+			<van-sku v-model="showBase" :show-add-cart-btn="show_cart" @buy-clicked="onBuyClicked" :sku="skuData.sku" :goods="goodsInfo" :goods-id="skuData.goods_id">
 				<span slot="sku-stepper"></span>
 			</van-sku>
 		</div>
@@ -46,6 +47,7 @@
 				loop: false,
 				value: '收起',
 				activeNames: "1",
+				goods_id : "",
 				skuData: {
 					kdt_id: 55,
 					sku: {
@@ -67,8 +69,8 @@
 		mounted() {
 			this.$emit('showTab', false)
 			const _this = this;
-			let goodsId = this.$route.query.goodsId;
-			_this.$http.get('goods/' + goodsId).then(function(res) {
+			this.goods_id = this.$route.query.goodsId;
+			_this.$http.get('goods/' + this.goods_id).then(function(res) {
 				res = res.data
 				_this.goods = res.data
 				_this.skuData = res.data.spec

@@ -14,7 +14,7 @@
 				images: []
 			}
 		},
-		mounted() {
+		created() {
 			this.$emit('changeTab', 3)
 			this.getCert()
 		},

@@ -18,7 +18,7 @@
 <script>
 	// import wx from 'weixin-js-sdk'
 	export default {
-		mounted() {
+		created() {
 			this.$emit('changeTab', 1)
 			const _this = this
 			_this.$http.get('goods').then(function(res) {

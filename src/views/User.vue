@@ -29,7 +29,7 @@
 				nickname: "",
 			}
 		},
-		mounted() {
+		created() {
 			this.$emit('changeTab', 4)
 			let _this = this
 			this.$http.get('user').then(function(res){

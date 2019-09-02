@@ -14,7 +14,7 @@
 				images: []
 			}
 		},
-		mounted() {
+		created() {
 			this.$emit('changeTab', 2)
 			this.getCompany()
 		},
